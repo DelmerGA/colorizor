@@ -8,4 +8,4 @@ puts "green text with  bg_blue".bg_blue + " and regular text"
 puts  "#{'some cyan bg'.red}".bg_red.bg_cyan
 col_str = "blue".blue
 col_str[0] = "f"
-puts col_str
+puts col_str.chop

@@ -43,17 +43,17 @@ class String
       end
     end
 
-    def coerce(other)
-      [self, other]
-    end
-
     def method_missing(m, *args, &block)
       colors = String.colors
       is_col = colors.include?(m)
       is_bg_col = colors.include?(m.to_s.gsub(/^bg_/,"").to_sym)
       unless is_col || is_bg_col
         result = @val.send(m, *args, &block)
-        colorize() if result == @val
+        if result == @val
+          colorize()
+        else
+          result
+        end
       else
         @val.send(m)
       end
