@@ -10,3 +10,6 @@ require("./colorizor/main.rb")
 
 puts "blue".blue + "hello"
 ```
+
+## Concerns
+

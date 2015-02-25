@@ -52,8 +52,9 @@ class String
       is_col = colors.include?(m)
       is_bg_col = colors.include?(m.to_s.gsub(/^bg_/,"").to_sym)
       unless is_col || is_bg_col
-        colorize().send(m, *args, &block)
-      else String.colors.include?(m)
+        result = @val.send(m, *args, &block)
+        colorize() if result == @val
+      else
         @val.send(m)
       end
     end
