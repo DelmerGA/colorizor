@@ -4,10 +4,6 @@ class String
     @@colors
   end
 
-  def colors
-    @@colors
-  end
-  
   @@colors = [
                 :black,
                 :red,
@@ -52,9 +48,12 @@ class String
     end
 
     def method_missing(m, *args, &block)
-      unless String.colors.include?(m)
+      colors = String.colors
+      is_col = colors.include?(m)
+      is_bg_col = colors.include?(m.to_s.gsub(/^bg_/,"").to_sym)
+      unless is_col || is_bg_col
         colorize().send(m, *args, &block)
-      else
+      else String.colors.include?(m)
         @val.send(m)
       end
     end
@@ -71,10 +70,11 @@ class String
     define_method(color) do
       ColorString.new(self, code, color)
     end
+    define_method("bg_" + color.to_s) do 
+      ColorString.new(self, code + 10, ("bg_" + color.to_s).to_sym)
+    end
   end
 
 end
 
 
-p "blah".blue
-puts "blah".red.green + " blah ".blue
